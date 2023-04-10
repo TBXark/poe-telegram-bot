@@ -31,7 +31,16 @@ Log into [Poe](https://poe.com/) on any web browser, then open your browser's de
 
 #### Run
 
+1. docker
 ```shell
 docker pull ghcr.io/tbxark/poe-telegram-bot:latest
 docker run -d --name poe-telegram-bot -v /root/poe-telegram-bot/config.json:/app/config.json ghcr.io/tbxark/poe-telegram-bot:latest
+```
+
+2. manual
+```shell
+git clone https://github.com/TBXark/poe-telegram-bot.git
+cd poe-telegram-bot
+pip install -r requirements.txt
+python main.py -c config.json
 ```
