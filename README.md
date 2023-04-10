@@ -5,7 +5,7 @@ A lightweight poe chatbot for telegram
 
 ### Usage
 
-### Finding Your Token:
+#### Finding Your Token:
 
 Log into [Poe](https://poe.com/) on any web browser, then open your browser's developer tools (also known as "inspect") and look for the value of the `p-b` cookie in the following menus:
 
@@ -14,7 +14,7 @@ Log into [Poe](https://poe.com/) on any web browser, then open your browser's de
 - Safari: Devtools > Storage > Cookies
 
 
-### Create config.json
+#### Create config.json
 > remove the comments before use
 ```js
 
@@ -29,7 +29,7 @@ Log into [Poe](https://poe.com/) on any web browser, then open your browser's de
 }
 ```
 
-### Run
+#### Run
 
 ```shell
 docker pull ghcr.io/tbxark/poe-telegram-bot:latest
