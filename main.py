@@ -79,7 +79,7 @@ async def chat(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             edit_count += 1
         except Exception as e:
             logger.info("Failed to edit message: {}".format(str(e)))
-    await msg.edit_text(full_text, parse_mode="Markdown")
+    await msg.edit_text(full_text)
 
 
 def set_my_commands(bot):
