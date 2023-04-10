@@ -1,14 +1,37 @@
-# POE chatbot for telegram
+# Poe chatbot for telegram
 
-```json
+A lightweight poe chatbot for telegram  
+
+
+### Usage
+
+### Finding Your Token:
+
+Log into [Poe](https://poe.com/) on any web browser, then open your browser's developer tools (also known as "inspect") and look for the value of the `p-b` cookie in the following menus:
+
+- Chromium: Devtools > Application > Cookies > poe.com
+- Firefox: Devtools > Storage > Cookies
+- Safari: Devtools > Storage > Cookies
+
+
+### Create config.json
+> remove the comments before use
+```js
 
 {
-  "token": ":",
+  "token": ":", // telegram bot token
   "chatbot": {
-      "0": {
-          "token": "",
-          "bot": "chinchilla"
+      "0": { // your telegram user id
+          "token": "", "", // poe token
+          "bot": "chinchilla" // poe bot name
       }
   }
 }
+```
+
+### Run
+
+```shell
+docker pull ghcr.io/tbxark/poe-telegram-bot:latest
+docker run -d --name poe-telegram-bot -v /root/poe-telegram-bot/config.json:/app/config.json ghcr.io/tbxark/poe-telegram-bot:latest
 ```
