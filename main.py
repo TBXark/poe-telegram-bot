@@ -64,11 +64,22 @@ async def chat(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         return
     msg = await update.message.reply_text("Thinking...")
     logger.info("Received message from {}: {}".format(update.message.from_user.id, update.message.text))
+    full_text = ""
+    edit_count = 0
+    index = 0
     for chunk in poe_cfg.client.send_message(poe_cfg.bot, update.message.text):
+        full_text = chunk["text"]
+        index += 1
+        if index % 3 != 0:
+            continue
+        if edit_count > 90:
+            continue
         try:
-            await msg.edit_text(chunk["text"])
+            await msg.edit_text(full_text)
+            edit_count += 1
         except Exception as e:
             logger.info("Failed to edit message: {}".format(str(e)))
+    await msg.edit_text(full_text)
 
 
 def set_my_commands(bot):
