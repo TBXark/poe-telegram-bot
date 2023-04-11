@@ -82,21 +82,25 @@ async def chat(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     logger.info("Received message from {}: {}".format(update.message.from_user.id, update.message.text))
     full_text = ""
     edit_count = 0
+    length_delta = 0
     for chunk in chat_bot.chat(update.message.text):
-        length_delta = len(chunk["text"]) - len(full_text)
+        length_delta += len(chunk["text"]) - len(full_text)
         full_text = chunk["text"]
         if length_delta < 25:
-            continue
-        if edit_count % 10 != 0:
             continue
         if edit_count > 90:
             continue
         try:
             await msg.edit_text(full_text)
             edit_count += 1
+            length_delta = 0
         except Exception as e:
             logger.info("Failed to edit message: {}".format(str(e)))
-    await msg.edit_text(full_text, parse_mode="MarkdownV2")
+    try:
+        await msg.edit_text(full_text, parse_mode="MarkdownV2")
+    except Exception as e:
+        logger.info("Failed to edit message: {}".format(str(e)))
+        await msg.edit_text(full_text)
 
 
 async def set_my_commands(bot):
