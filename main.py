@@ -75,20 +75,25 @@ async def token(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 
 async def chat(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    logger.info("Received message from {}: {}".format(update.message.from_user.id, update.message.text))
+
     chat_bot = chat_bots[update.message.from_user.id]
     if chat_bot is None:
         return
-    msg = await update.message.reply_text("Thinking...")
-    logger.info("Received message from {}: {}".format(update.message.from_user.id, update.message.text))
+
     full_text = ""
     edit_count = 0
     length_delta = 0
+
+    msg = await update.message.reply_text("Thinking...")
     for chunk in chat_bot.chat(update.message.text):
         length_delta += len(chunk["text"]) - len(full_text)
         full_text = chunk["text"]
         if length_delta < 25:
             continue
-        if edit_count > 90:
+        if edit_count >= 90:
+            if edit_count == 90:
+                await msg.edit_text(full_text + "...")
             continue
         try:
             await msg.edit_text(full_text)
@@ -96,6 +101,7 @@ async def chat(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             length_delta = 0
         except Exception as e:
             logger.info("Failed to edit message: {}".format(str(e)))
+
     try:
         await msg.edit_text(full_text, parse_mode="MarkdownV2")
     except Exception as e:
