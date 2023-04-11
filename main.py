@@ -82,11 +82,12 @@ async def chat(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     logger.info("Received message from {}: {}".format(update.message.from_user.id, update.message.text))
     full_text = ""
     edit_count = 0
-    index = 0
     for chunk in chat_bot.chat(update.message.text):
+        length_delta = len(chunk["text"]) - len(full_text)
         full_text = chunk["text"]
-        index += 1
-        if index % 4 != 0:
+        if length_delta < 25:
+            continue
+        if edit_count % 10 != 0:
             continue
         if edit_count > 90:
             continue
