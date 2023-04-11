@@ -6,7 +6,8 @@ init:
 run:
 	python3 main.py
 
-.PHONY: docker
-docker:
-    docker build -t ghcr.io/tbxark/poe-telegram-bot:latest .
-    docker push ghcr.io/tbxark/poe-telegram-bot:latest
+.PHONY: image
+image:
+	docker build -t ghcr.io/tbxark/poe-telegram-bot:latest . && \
+	docker push ghcr.io/tbxark/poe-telegram-bot:latest
+
