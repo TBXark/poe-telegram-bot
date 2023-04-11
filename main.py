@@ -5,6 +5,7 @@ import logging
 import poe
 import json
 import sys
+import asyncio
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 
@@ -141,7 +142,8 @@ def main() -> None:
     application.add_handler(CommandHandler("token", token))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, chat))
 
-    set_my_commands(application.bot)
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(set_my_commands(application.bot))
 
     logger.info("Starting application")
     application.run_polling()
