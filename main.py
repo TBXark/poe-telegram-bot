@@ -94,10 +94,10 @@ async def chat(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             continue
         if edit_count >= 90:
             if edit_count == 90:
-                await msg.edit_text(full_text + "...")
+                await msg.edit_text(full_text + "\n(Loading...)")
             continue
         try:
-            await msg.edit_text(full_text)
+            await msg.edit_text(full_text + "\n(Loading...)")
             edit_count += 1
             length_delta = 0
         except Exception as e:
