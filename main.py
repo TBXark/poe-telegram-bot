@@ -124,7 +124,6 @@ async def set_my_commands(bot):
 
 def main() -> None:
     config_path = "config.json"
-    poe.user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/111.0"
     if len(sys.argv) > 1 and sys.argv.index("-c") < len(sys.argv) - 1:
         config_path = sys.argv[sys.argv.index("-c") + 1]
     if config_path is None:
@@ -133,6 +132,7 @@ def main() -> None:
     with open(config_path) as f:
         config = json.load(f)
         telegram_token = config["token"]
+        poe.user_agent = config["user_agent"]
         for user_id, user_config in config["chatbot"].items():
             chat_bots[int(user_id)] = PoeChat(user_config["token"], user_config["bot"])
 

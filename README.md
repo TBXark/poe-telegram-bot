@@ -19,12 +19,13 @@ Log into [Poe](https://poe.com/) on any web browser, then open your browser's de
 ```js
 
 {
-  "token": ":", // telegram bot token
-  "chatbot": {
-      "0": { // your telegram user id
-          "token": "", "", // poe token
-          "bot": "chinchilla" // poe bot name
-      }
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/111.0", 
+    "token": ":", // telegram bot token
+    "chatbot": {
+        "0": { // your telegram user id
+            "token": "", "", // poe token
+            "bot": "chinchilla" // poe bot name
+        }
   }
 }
 ```
