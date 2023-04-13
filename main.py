@@ -56,8 +56,9 @@ async def reconnect(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     chat_bot = chat_bots[update.message.from_user.id]
     if chat_bot is None:
         return
+    msg = await update.message.reply_text("Reconnecting...")
     chat_bot.reconnect()
-    await update.message.reply_text("Reconnecting...")
+    await msg.edit_text("Reconnected")
 
 
 async def models(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
