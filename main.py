@@ -128,6 +128,7 @@ async def set_my_commands(bot):
     try:
         await bot.set_my_commands([
             ("start", "Start a new conversation"),
+            ("reconnect", "Reconnect to the chatbot"),
             ("models", "List all models"),
             ("model", "Set the model"),
             ("token", "Set the token"),
