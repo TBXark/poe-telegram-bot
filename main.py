@@ -19,6 +19,7 @@ chat_bots = {}
 
 class PoeChat:
     def __init__(self, client_token, chat_model):
+        self.token = client_token
         self.client = poe.Client(client_token)
         self.model = chat_model
 
@@ -37,6 +38,10 @@ class PoeChat:
     def new_conversation(self):
         self.client.send_chat_break(self.model)
 
+    def reconnect(self):
+        self.client.disconnect_ws()
+        self.client = poe.Client(self.token)
+
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     chat_bot = chat_bots[update.message.from_user.id]
@@ -45,6 +50,14 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     chat_bot.new_conversation()
     logger.info("Started conversation with {}".format(update.message.from_user.id))
     await update.message.reply_text("New conversation started")
+
+
+async def reconnect(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    chat_bot = chat_bots[update.message.from_user.id]
+    if chat_bot is None:
+        return
+    chat_bot.reconnect()
+    await update.message.reply_text("Reconnecting...")
 
 
 async def models(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -138,6 +151,7 @@ def main() -> None:
 
     application = Application.builder().token(telegram_token).build()
     application.add_handler(CommandHandler("start", start))
+    application.add_handler(CommandHandler("reconnect", reconnect))
     application.add_handler(CommandHandler("models", models))
     application.add_handler(CommandHandler("model", model))
     application.add_handler(CommandHandler("token", token))
