@@ -23,7 +23,7 @@ Log into [Poe](https://poe.com/) on any web browser, then open your browser's de
     "token": ":", // telegram bot token
     "chatbot": {
         "0": { // your telegram user id
-            "token": "", "", // poe token
+            "token": "", // poe token
             "bot": "chinchilla" // poe bot name
         }
   }
