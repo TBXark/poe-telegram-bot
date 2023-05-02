@@ -99,12 +99,13 @@ async def chat(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     full_text = ""
     edit_count = 0
     length_delta = 0
+    length_delta_step = 25
 
     msg = await update.message.reply_text("Thinking...")
     for chunk in chat_bot.chat(update.message.text):
         length_delta += len(chunk["text"]) - len(full_text)
         full_text = chunk["text"]
-        if length_delta < 25:
+        if length_delta < length_delta_step:
             continue
         if edit_count >= 90:
             if edit_count == 90:
@@ -114,6 +115,7 @@ async def chat(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             await msg.edit_text(full_text + "\n(Loading...)")
             edit_count += 1
             length_delta = 0
+            length_delta_step += 10
         except Exception as e:
             logger.info("Failed to edit message: {}".format(str(e)))
 
